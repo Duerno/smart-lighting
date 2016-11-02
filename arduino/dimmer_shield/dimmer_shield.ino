@@ -1,5 +1,3 @@
-
-
 int AC_LOAD = 3;// Dará o pulso no Triac pin
 int dimming = 125;// Dimming level (0-128) 0 = ON, 128 = OFF
 unsigned long time;//Contará o tempo
@@ -42,11 +40,11 @@ void loop()
     {
     i=0;// Zera o quantidades de caracteres recebidos
     flag=0;// Zera o aviso de que foi recebido algum dado na serial
-    }  
+    }
    }
- 
+
   //-------------------------------------------------------------------------------------------
-  
+
   //Aumenta a intensidade
   if(digitalRead(4)==1 && dimming >10)// Compara se o botão foi pressionado e se o dimming é maior que 10 seu limite máximo
   {
@@ -62,7 +60,7 @@ void loop()
   //Diminui a intensidade
   if(digitalRead(5)==1&& dimming<125)
   {
-    dimming= dimming +5; 
+    dimming= dimming +5;
     y=dimming/1.25;
     y=(y-100)*(-1);
     Serial.print(y);
@@ -85,27 +83,27 @@ void loop()
 if (timeout>200&&flag==1)// Compara se houve estouro do timeout(se ficou um tempo sem recepção) e se houve recepção
 {
   flag=0;// Sera aviso de recepção
-  
+
    // Verifica a quantidade de informação recebida
    switch(i)
    {
    case 1:
    x=brilho[0];//Unidade
    break;
-   
+
    case 2:
    x=brilho[0]*10 + brilho[1];//Dezena e unidade
    break;
-   
+
    case 3:
    x=brilho[0]*100 + brilho[1]*10 + brilho[2];//Centena, Dezena, Unidade
    break;
-   }  
+   }
    // Envia para serial informações em % e resolução de disparo
     Serial.print(x);
     Serial.println("%");
      delay(30);
-   
+
     if(x>100||x<0)// Proteção para se foi inserido um valor mair que 100%
     {
     Serial.println("Excedeu o limite");
@@ -122,6 +120,5 @@ if (timeout>200&&flag==1)// Compara se houve estouro do timeout(se ficou um temp
     Serial.print("Resolucao: ");
     Serial.println(dimming);
     }
-
-}
+  }
 }
