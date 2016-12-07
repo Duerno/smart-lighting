@@ -34,15 +34,15 @@ void loop() {
   updateCurLightLevel();
   updateOptLightLevel();
 
-  if(cur_lightlevel < opt_lightlevel) {
+  if(cur_lightlevel - opt_lightlevel < -10) {
     increaseLight();
-  } else if(cur_lightlevel > opt_lightlevel) {
+  } else if(cur_lightlevel - opt_lightlevel > 10) {
     decreaseLight();
   } else {
     // the light level is just ok.
   }
 
-  delayMicroseconds(600);
+  delayMicroseconds(1000);
 }
 
 // This routine is called whenever the AC signal passes through zero.
